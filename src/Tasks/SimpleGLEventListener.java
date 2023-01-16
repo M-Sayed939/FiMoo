@@ -5,6 +5,8 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import java.awt.*;
 import java.util.Random;
+import HomeTask.Textures.AnimListener;
+import HomeTask.Textures.TextureReader;
 
 import static java.lang.Math.*;
 

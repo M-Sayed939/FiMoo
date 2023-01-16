@@ -1,7 +1,7 @@
 package Tasks;
 
 import com.sun.opengl.util.FPSAnimator;
-
+import HomeTask.Textures.AnimListener;
 import javax.media.opengl.GLCanvas;
 import javax.swing.*;
 import java.awt.*;

@@ -1,42 +1,28 @@
-package HomeTask.Textures.Example1;
+package CardGame;
 
 import HomeTask.Textures.AnimListener;
+
+import HomeTask.Textures.Example1.AnimGLEventListener2;
 import HomeTask.Textures.TextureReader;
-import java.awt.event.*;
-import java.io.IOException;
-import javax.media.opengl.*;
 
-import java.util.BitSet;
+import javax.media.opengl.GL;
+import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.glu.GLU;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.util.BitSet;
 
-public class AnimGLEventListener2 extends AnimListener {
+public class BackCard extends AnimListener {
 
-    //int maxWidth = 100;
-    //int maxHeight = 100;
-    double max_X = 1, max_Y = 1, min_X = -1, min_Y = -1;
-    double x = 0, y = 0;
-    double quad_radius = 1;
-    double scale = 0.1;
-
-    String textureNames[] = {"Man1.png", "Man2.png", "Man3.png", "Man4.png", "Back.png"};
+    String textureNames[] = {"Backcard.png", "GreenBack.jpg"};
     TextureReader.Texture texture[] = new TextureReader.Texture[textureNames.length];
     int textures[] = new int[textureNames.length];
 
-    /*
-     5 means gun in array pos
-     x and y coordinate for gun 
-     */
     @Override
     public void init(GLAutoDrawable gld) {
 
         GL gl = gld.getGL();
         gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);    //This Will Clear The Background Color To Black
-        //gl.glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
-        gl.glViewport(0, 0, 100, 100);
-        gl.glMatrixMode(GL.GL_PROJECTION);
-        gl.glLoadIdentity();
-        gl.glOrtho(0.0, 100, 0, 100, -1, 1);
-
 
         gl.glEnable(GL.GL_TEXTURE_2D);  // Enable Texture Mapping
         gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
@@ -70,10 +56,9 @@ public class AnimGLEventListener2 extends AnimListener {
         gl.glLoadIdentity();
 
         DrawBackground(gl);
-        handleKeyPress();
 
 //        DrawGraph(gl);
-        DrawSprite(gl, x, y, 0, scale);
+        DrawSprite(gl);
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
@@ -82,20 +67,16 @@ public class AnimGLEventListener2 extends AnimListener {
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
     }
 
-    public void DrawSprite(GL gl, double x, double y, int index, double scale) {
+    public void DrawSprite(GL gl) {
         gl.glEnable(GL.GL_BLEND);
-        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[index]);	// Turn Blending On
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[0]);	// Turn Blending On
 
+        //gl.glColor3f(0, 0, 0);
         gl.glPushMatrix();
-        //gl.glTranslated(x / (maxWidth / 2.0) - 0.9, y / (maxHeight / 2.0) - 0.9, 0);
-
-        gl.glTranslated(x * scale, y * scale, 1);
-        gl.glScaled(scale, scale, 1);
-
-        //
+//            gl.glTranslated( 0, 0, 0);
+        gl.glScaled(0.3, 0.3, 0.9);
         //System.out.println(x +" " + y);
         gl.glBegin(GL.GL_QUADS);
-        //gl.glColor3f(0, 0, 0);
         // Front Face
         gl.glTexCoord2f(0.0f, 0.0f);
         gl.glVertex3f(-1.0f, -1.0f, -1.0f);
@@ -109,13 +90,13 @@ public class AnimGLEventListener2 extends AnimListener {
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
-        //gl.glColor3f(1, 1, 1);
     }
 
     public void DrawBackground(GL gl) {
         gl.glEnable(GL.GL_BLEND);
-        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[4]);	// Turn Blending On
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[1]);	// Turn Blending On
 
+        //gl.glColor3f(0, 0.5f, 0.5f);
         gl.glPushMatrix();
         gl.glBegin(GL.GL_QUADS);
         // Front Face
@@ -136,54 +117,25 @@ public class AnimGLEventListener2 extends AnimListener {
     /*
      * KeyListener
      */
-    public void handleKeyPress() {
-
-        if (isKeyPressed(KeyEvent.VK_LEFT)) {
-            if ((x - quad_radius) * scale > min_X) {
-                x -= scale * 2;
-            }
-        }
-        if (isKeyPressed(KeyEvent.VK_RIGHT)) {
-            if ((x + quad_radius) * scale < max_X) {
-                x += scale * 2;
-            }
-        }
-        if (isKeyPressed(KeyEvent.VK_DOWN)) {
-            if ((y - quad_radius) * scale > min_Y) {
-                y -= scale * 2;
-            }
-        }
-        if (isKeyPressed(KeyEvent.VK_UP)) {
-            if ((y + quad_radius) * scale < max_Y) {
-                y += scale * 2;
-            }
-        }
-    }
-
-    public BitSet keyBits = new BitSet(256);
-
     @Override
-    public void keyPressed(final KeyEvent event) {
-        int keyCode = event.getKeyCode();
-        keyBits.set(keyCode);
+    public void keyTyped(KeyEvent ke) {
+
     }
 
     @Override
-    public void keyReleased(final KeyEvent event) {
-        int keyCode = event.getKeyCode();
-        keyBits.clear(keyCode);
+    public void keyPressed(KeyEvent ke) {
+
     }
 
     @Override
-    public void keyTyped(final KeyEvent event) {
-        // don't care 
-    }
+    public void keyReleased(KeyEvent ke) {
 
-    public boolean isKeyPressed(final int keyCode) {
-        return keyBits.get(keyCode);
     }
 
     public static void main(String[] args) {
-        new Anim(new AnimGLEventListener2());
+        new Test(new CardGame.BackCard());
     }
+
 }
+
+
