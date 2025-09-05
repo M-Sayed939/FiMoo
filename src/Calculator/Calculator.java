@@ -1,4 +1,4 @@
-package Home;
+package Calculator;
 
 import HomeTask.Textures.AnimListener;
 
@@ -416,8 +416,8 @@ public class Calculator extends AnimListener implements ActionListener {
         buttonZero.setEnabled(false);
         buttonDot.setEnabled(false);
     }
-    public static void main(String[] args)
-    {
+
+    public static void main(String[] args) {
         new Calculator();
     }
 
